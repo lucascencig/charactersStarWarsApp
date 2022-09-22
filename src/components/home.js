@@ -1,3 +1,4 @@
+
 import React from 'react'
 import '../styles/bootstrap.min.css'
 import '../styles/Home.css'
@@ -58,3 +59,4 @@ const Home = () => {
 }
 
 export default Home
+
