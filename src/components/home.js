@@ -15,19 +15,38 @@ const Home = () => {
       </div>
 
 
-      <aside>
-        <ul className='row'>
-          <li>Name: { }</li>
-          <li>Height: { }</li>
-          <li>Mass: { }</li>
-          <li>Hair Color: { }</li>
-          <li>Skin Color: { }</li>
-          <li>Eye Color: { }</li>
-          <li>Birth Year: { }</li>
-          <li>Gender: { }</li>
-          <li>Films: { }</li>
-          <li>Species: { }</li>
-        </ul>
+      <aside className='container Primary'>
+        <table class="table">
+          <thead>
+            <td>Name:</td>
+            <td>Height: </td>
+            <td>Mass: </td>
+            <td>Hair Color:</td>
+            <td>Skin Color: { }</td>
+            <td>Eye Color: { }</td>
+            <td>Birth Year: { }</td>
+            <td>Gender: { }</td>
+            <td>Films: { }</td>
+            <td>Species: { }</td>
+          </thead>
+          <tbody>
+            <tr>
+              {/* ACA VA EL CODIGO JS PARA LOS DETALLES DEL PERSONAJE */}
+              <th scope="row">LUKE</th>
+              <td>70KG </td>
+              <td>75KG </td>
+              <td>BLACK</td>
+              <td>WHITE</td>
+              <td>GREEN</td>
+              <td>25/09/1992</td>
+              <td>MALE</td>
+              <td>ALGUNAS</td>
+              <td>HUMAN</td>
+            </tr>
+
+          </tbody>
+
+        </table>
       </aside>
 
 
