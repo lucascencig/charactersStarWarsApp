@@ -1,0 +1,28 @@
+h1 {
+  text-align: center;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: auto;
+  padding: 10px;
+  width: 90%;
+  height: auto;
+}
+
+.fotos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.fotos img {
+  width: 150px;
+  height: 150px;
+}
