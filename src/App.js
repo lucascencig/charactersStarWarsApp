@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Fotos from "./fotos";
+import Fotos from "./pruebaHooks";
 
 
 function App() {
