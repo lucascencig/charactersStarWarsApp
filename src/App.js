@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Fotos from "./pruebaHooks";
-
+// import Fotos from "./pruebaHooks";
+import Home from "./components/home";
 
 function App() {
 
 
   return (
     <div>
-      <Fotos />
+      <Home />
     </div>
   );
 }
