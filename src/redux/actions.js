@@ -15,8 +15,22 @@ export function getCharacters(payload) {
   }
 }
 
-export async function getCharacterByName(name) {
-  const res = await fetch(`${api}people/?search=${name}`);
-  const data = await res.json();
-  return data;
+// export async function getCharacterByName(name) {
+//   return async function (dispatch) {
+
+//     await axios.get(`${api}people/?search=${name}`).then(res => {
+//       dispatch({ type: 'GET_CHARACTER_NAME', payload: res.data })
+//       // console.log(res.data)
+//     }).catch(err => {
+//       console.log("No se pudo traer el nombre", err)
+//     })
+//   }
+// }
+
+export function getCharacterByName(name) {
+  return dispatch => {
+    axios
+      .get(`${api}people/?search=${name}`)
+      .then(res => dispatch({ type: 'GET_CHARACTER_NAME', payload: res.data }));
+  };
 }

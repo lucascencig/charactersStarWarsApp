@@ -11,45 +11,63 @@ import { getCharacters, getCharacterByName } from '../redux/actions';
 //STYLES
 import '../styles/bootstrap.min.css'
 import '../styles/Home.css'
+import '../styles/searchbar.css'
+import swal from 'sweetalert'
 // import SearchBar from './SearchBar';
 // import SearchResults from './SearchResults';
 
 const Home = () => {
 
   const dispatch = useDispatch()
-  const inputSearch = useRef(null)
+
 
   const characters = useSelector(state => state.characters)
   // console.log(characters.results[0].name)
 
   const [character, setCharacter] = useState()
-
-  const [textSearch, setTextSearch] = useState("")
-
   const [nextPag, setNextPag] = useState([])
+  const [charName, setCharName] = useState("")
 
   useEffect(() => {
     dispatch(getCharacters())
     setCharacter(characters)
   }, [])
-  console.log(character)
 
-  const onChangeTextSearch = (e) => {
-    e.preventDefault();
 
-    const text = inputSearch.current.value;
-    setTextSearch(text)
+  const handleChange = (e) => {
+    e.preventDefault()
+    setCharName(e.target.value);
   }
 
-  const onSearchSubmit = (e) => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    try {
+      if (charName.length) {
+        dispatch(getCharacterByName(charName));
+        console.log(charName)
+      } else {
+        // alert("Write a character´s name")
+        swal(
+          {
+            title: 'Write a character´s name',
+            button: 'Ok.'
+          }
+        )
+      }
+    } catch (err) {
+      throw new Error(err)
+    }
 
-    if (e.key !== "Enter") return;
 
-    inputSearch.current.value = ""
-    getCharacterByName(textSearch).then((char) => setCharacter(char.character.results)).catch(err => {
-      alert("no, se rompio todooooo.")
-    })
-    console.log(inputSearch.current.value)
+    if (charName.length <= 2) {
+      swal(
+        // <h2>Escribe más de 2 caracteres...</h2>
+        {
+          title: 'Please, write more...',
+          button: 'Ok.'
+        }
+      )
+    }
   }
 
   console.log(nextPag)
@@ -61,12 +79,16 @@ const Home = () => {
 
       <div>
         <form className='container searchForm' >
-          <input ref={inputSearch} onChange={onChangeTextSearch} onKeyDown={onSearchSubmit} className='m-3 my-3 text-center searchbar' type="text" placeholder="Search your favourite character..." />
-          <button className='btn btn-success m-3 buttonSearch'>Search</button>
+          <input onChange={handleChange} value={charName} className='m-3 my-3 text-center searchbar' type="text" placeholder="Search your favourite character..." />
+          <button onClick={handleSubmit} className='btn btn-success m-3 buttonSearch'>Search</button>
         </form>
         <hr />
       </div>
 
+      <div>
+        {charName.length ? <h2>Results for: {charName} </h2> : <h2>No results for: {charName}</h2>}
+
+      </div>
       <aside className='container Primary'>
         <table className="table">
           <thead>
@@ -84,82 +106,85 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              {/* ACA VA EL CODIGO JS PARA LOS DETALLES DEL PERSONAJE con las {} */}
-              <td scope="row">{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li >{e.name}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              }</td>
-              <td> {
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li>{e.height}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              }
-              </td>
+            {/* ACA VA EL CODIGO JS PARA LOS DETALLES DEL PERSONAJE con las {} */}
+            {characters.results ?
+              <tr>
+                <td scope="row">{
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li >{e.name}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                }</td>
+                <td> {
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li>{e.height}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                }
+                </td>
 
-              <td>{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li>{e.mass}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              } </td>
-              <td>{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li>{e.hair_color}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              }</td>
-              <td>{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li>{e.skin_color}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              }</td>
-              <td>{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li>{e.eye_color}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              }</td>
-              <td>{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li>{e.birth_year}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              }</td>
-              <td>{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <div key={e.url}>
-                      <li>{e.gender}</li>
-                    </div>
-                ).slice(0, 1) : "cargando"
-              }</td>
-              <td>More Details</td>
-              {/* <td>{
-                characters !== undefined ? characters.results?.map(
-                  e =>
-                    <li key={e.species}>{e.species}</li>
-                ) : "cargando"
-              }</td> */}
-            </tr>
+                <td>{
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li>{e.mass}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                } </td>
+                <td>{
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li>{e.hair_color}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                }</td>
+                <td>{
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li>{e.skin_color}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                }</td>
+                <td>{
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li>{e.eye_color}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                }</td>
+                <td>{
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li>{e.birth_year}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                }</td>
+                <td>{
+                  characters !== undefined ? characters.results?.map(
+                    e =>
+                      <div key={e.url}>
+                        <li>{e.gender}</li>
+                      </div>
+                  ).slice(0, 1) : "cargando"
+                }</td>
+                {characters ? <td>More Details</td> : null}
+
+                {/* <td>{
+              characters !== undefined ? characters.results?.map(
+                e =>
+                  <li key={e.species}>{e.species}</li>
+              ) : "cargando"
+            }</td> */}
+              </tr>
+              : <tr><td>Which character do you want to see their detail?</td></tr>}
           </tbody>
 
         </table>
@@ -168,6 +193,8 @@ const Home = () => {
       <div>
         <Pages />
       </div>
+
+
     </div>
   )
 }

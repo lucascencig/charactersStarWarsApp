@@ -1,6 +1,7 @@
 const initialState = {
   characters: [],
   characterName: [],
+
 }
 
 export const rootReducer = (state = initialState, action) => {
@@ -13,9 +14,11 @@ export const rootReducer = (state = initialState, action) => {
       }
 
     case 'GET_CHARACTER_NAME':
+      const character = state.characters
       return {
         ...state,
-        characterName: action.payload
+        characterName: character,
+        characters: action.payload
       }
 
     default: return state
