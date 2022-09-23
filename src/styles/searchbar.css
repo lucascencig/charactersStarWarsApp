@@ -1,0 +1,13 @@
+.searchForm {
+  display: flex;
+  justify-content: center;
+}
+
+.searchbar {
+  width: 300px;
+}
+
+.buttonSearch {
+  width: 100px;
+  height: 40px;
+}
