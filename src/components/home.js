@@ -23,7 +23,7 @@ const Home = () => {
             <tr>
               <th>Name</th>
               <th>Height</th>
-              <th>Mass</th>
+              <th>Massss</th>
               <th>Hair Color</th>
               <th>Skin Color</th>
               <th>Eye Color</th>
